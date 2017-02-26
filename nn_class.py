@@ -56,7 +56,7 @@ class TimeSpacePerceptron1000(Chain):
         ECoG_filtered = F.concat(tuple(ECoG_filtered))
         # ここまで IIR
         ecog_space = self.transformECoG(ECoG_filtered)
-        ecog_space_dropout = F.dropout(ecog_space, train=train, ratio=0.5)
+        ecog_space_dropout = F.dropout(ecog_space, train=train, ratio=15.0/16)
         eeg  = EEG_filtered
         return ecog_space, eeg, EEG_filtered_prev, ECoG_filtered_prev
 
@@ -74,7 +74,7 @@ class TimeSpacePerceptron2000(Chain):
     def __call__(self, EEG_t, ECoG_t, EEG_filtered_prev, ECoG_filtered_prev, train=False):
         # EEG_t は 16 * time * time_delay
         ecog_space = self.LSTM(ECoG_t)
-        ecog_space_dropout = F.dropout(ecog_space, train=train, ratio=0.5)
+        ecog_space_dropout = F.dropout(ecog_space, train=train, ratio=15.0/16)
         eeg  = EEG_t
         return ecog_space, eeg, EEG_filtered_prev, ECoG_filtered_prev
 
@@ -119,7 +119,7 @@ class TimeSpacePerceptron0000(Chain):
         ECoG_filtered = F.concat(tuple(ECoG_filtered))
         # ここまで FIR
         ecog_space = self.transformECoG(ECoG_filtered)
-        ecog_space_dropout = F.dropout(ecog_space, train=train, ratio=0.5)
+        ecog_space_dropout = F.dropout(ecog_space, train=train, ratio=15.0/16)
         eeg  = EEG_filtered
         return ecog_space_dropout, eeg, EEG_filtered_prev, ECoG_filtered_prev
 
